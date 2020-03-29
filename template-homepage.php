@@ -5,12 +5,14 @@ get_header();
       <main>
         <section class="intro container">
             <div class="search-bar">
-                <input type="text" placeholder="Search products">
-                <button type="submit"></button>
+                <!-- <input type="text" placeholder="Search products">
+                <button type="submit"></button> -->
+                <form role="search" action="<?php echo site_url('/'); ?>" method="get" id="searchform">
+                    <input type="text" name="s" placeholder="Search Products"/>
+                    <input type="hidden" name="post_type" value="products" />
+                    <button type="submit" alt="Search" value="Search"> </button>
+                </form>
             </div>
-            <!-- <div class="truck-image animated slideInRight slow "> -->
-                <!-- <img class="truck-image animated slideInRight slow " src="<?php echo get_template_directory_uri(); ?>/images/truck2.jpg" alt=""> -->
-            <!-- </div> -->
             <?php if( get_field('header_image') ): ?>
                 <img class="truck-image animated slideInRight slow " src="<?php the_field('image'); ?>" />
             <?php endif; ?>
@@ -185,10 +187,9 @@ get_header();
                                 <img src="<?php  echo get_the_post_thumbnail_url($post->ID, 'news_image' ); ?>" alt="">
                             </div>
                             <div class="news-list-title">
-                                <span></span>
                                 <div class="news-list-title-content">
                                     <h3><?php the_title(); ?></h3>
-                                    <p><?php the_excerpt(); ?></p>
+                                    <p><?php echo excerpt(15); ?></p>
                                     <a href="<?php the_permalink(); ?>">Read more</a>
                                 </div>
                             </div>
@@ -201,7 +202,7 @@ get_header();
    
                 </ul>
                 <div class="news-button">
-                    <a class="big-button">More news</a>
+                    <a href="<?php echo get_all_news_url(); ?>" class="big-button">More news</a>
                 </div>
             </div>
             <div class="bg-decor decor-position-3"></div>
@@ -225,18 +226,20 @@ get_header();
                         $products->the_post();
                 ?>
                     <li>
-                        <div class="product-list-image">
-                            <img src="<?php echo get_correct_image_link_thumb(get_field('product_image'), 'product_image' ); ?>" alt="">
-                        </div>
-                        <div class="product-list-title">
-                            <h4><?php the_field('product_title'); ?></h4>
-                        </div>
-                        <div class="product-list-price">
-                            <?php the_field('product_price'); ?>
-                        </div>
-                        <div class="product-list-button">
-                            <a href="<?php the_permalink(); ?>">More Information</a>
-                        </div>
+                        <a href="<?php the_permalink(); ?>">
+                            <div class="product-list-image">
+                                <img src="<?php echo get_correct_image_link_thumb(get_field('product_image'), 'product_image' ); ?>" alt="">
+                            </div>
+                            <div class="product-list-title">
+                                <h4><?php the_field('product_title'); ?></h4>
+                            </div>
+                            <div class="product-list-price">
+                                <?php the_field('product_price'); ?>
+                            </div>
+                            <div class="product-list-button">
+                                <p>More Information</p>
+                            </div>
+                        </a>
                     </li>
 
                     <?php
@@ -244,10 +247,9 @@ get_header();
                         endif;
                     ?>
 
-  
                 </ul>
                 <div class="products-button">
-                    <a class="big-button">All products</a>
+                    <a href="<?php echo get_all_products_url(); ?>" class="big-button">All products</a>
                 </div>
             </div>
             <div class="bg-decor decor-position-1"></div>

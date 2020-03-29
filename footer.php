@@ -49,28 +49,45 @@
                     <form id="form" action="" method="post">
                         <div class="form-item">
                             <label for="name">Contact name<span>*</span></label>
-                            <input name="name" type="text" minlength="5" placeholder="Type your name" required>
+                            <input name="name" type="text" minlength="5" placeholder="Type your name" >
                         </div>
                         <div class="form-item">
                             <label for="subject">Subject<span>*</span></label>
-                            <input name="subject" type="text" minlength="2" placeholder="Type your last name" required>
+                            <input name="subject" type="text" minlength="2" placeholder="Type your last name" >
                         </div>
                         <div class="form-item">
                             <label for="number">Phone numer<span>*</span></label>
-                            <input name="number" type="number" minlength="7" placeholder="Type your phone number" required>
+                            <input name="number" type="number" minlength="7" placeholder="Type your phone number" >
                         </div>
                         <div class="form-item">
                             <label for="email">Email address<span>*</span></label>
-                            <input name="email" type="email"  placeholder="Type your email address" required>
+                            <input name="email" type="email"  placeholder="Type your email address" >
                         </div>
                         <div class="form-item">
                             <label for="message">Message<span>*</span></label>
-                            <textarea name="massage" minlength="10" id="" cols="65" rows="4" placeholder="Type your message" required></textarea>
+                            <textarea name="massage" minlength="10" id="" cols="65" rows="4" placeholder="Type your message" ></textarea>
                         </div>
-                    </form>
-                    <div class="contacts-form-button">
+
+                        <div class="contacts-form-button">
                         <button type="submit" class="big-button"><span>Send message</span></button>
                     </div>
+                    </form>
+
+                    <div class="loader display-none">
+                        <div class="circles">
+                            <span class="one"></span>
+                            <span class="two"></span>
+                            <span class="three"></span>
+                        </div>
+                        <div class="pacman">
+                            <span class="top"></span>
+                            <span class="bottom"></span>
+                            <span class="left"></span>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="send">Sending...</div>
+                    </div>
+                   
                 </div>
             </div>
         </div>
@@ -81,24 +98,46 @@
   <footer>
   <div class="contacts_us-icons animated zoomIn delay-2s ">
                 <ul>
+                    <?php 
+                        $Supremo = get_field('Supremo', 'options');
+                        $messenger = get_field('messenger', 'options');
+                        $telegram = get_field('telegram', 'options');
+                        $viber = get_field('viber', 'options');
+                        $whatsapp = get_field('whatsapp', 'options');
+                        $facebook = get_field('facebook', 'options');
+                    ?> 
+
+                    <?php if($Supremo){ ?>
                     <li>
-                        <a class="icon-1" href=""></a>
+                        <a class="icon-1" href="<?php echo $Supremo; ?>" target="_blank"></a>
                     </li>
+                    <?php } ?>
+                    <?php if($messenger){ ?>
                     <li>
-                        <a class="icon-2" href=""></a>
+                        <a class="icon-2" href="<?php echo $messenger; ?>" target="_blank"></a>
                     </li>
+                    <?php } ?>
+                    <?php if($telegram){ ?>
                     <li>
-                        <a class="icon-3" href=""></a>
+                        <a class="icon-3" href="<?php echo $telegram; ?>" target="_blank"></a>
                     </li>
+                    <?php } ?>
+                    <?php if($viber){ ?>
                     <li>
-                        <a class="icon-4" href=""></a>
+                        <a class="icon-4" href="<?php echo $viber; ?>" target="_blank"></a>
                     </li>
+                    <?php } ?>
+                    <?php if($whatsapp){ ?>
                     <li>
-                        <a class="icon-5" href=""></a>
+                        <a class="icon-5" href="<?php echo $whatsapp; ?>" target="_blank"></a>
                     </li>
+                    <?php } ?>
+                    <?php if($facebook){ ?>
                     <li>
-                        <a class="icon-6" href=""></a>
+                        <a class="icon-6" href="<?php echo $facebook; ?>" target="_blank"></a>
                     </li>
+                    <?php } ?>
+
                 </ul>
             </div>
           <?php include('includes/bottom_meniu.php'); ?>

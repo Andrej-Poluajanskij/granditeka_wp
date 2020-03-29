@@ -10,6 +10,33 @@ $('.go-on-top').click(function(){
 });
 
 
+ 
+// document.querySelector('.loader').style.display = 'none'
+$(document).on('submit', '#form', function(e){
+console.log('submit');
+e.preventDefault();
+  // $('.loader-holder').fadeIn();
+  $('.loader').toggleClass("display-none");
+  var formData = new FormData(this);
+  formData.append('action', 'send_contact_form_message');
+
+  $.ajax({
+      url: variables.ajax_url,
+      data: formData,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+      success: function (data) {
+        console.log(data);
+        console.log('veikia');
+        $('.loader').toggleClass("display-none");
+      }
+  });
+
+
+});
+
+
 //
 //Button scroll up visible/ unvisible
 //
@@ -76,7 +103,7 @@ $('.header-burger-meniu').click(function(){
 });
 
 
-//close mobile meniu
+//close mobile meniu onclick on screen
 window.onclick = (event) => {
 
 if( event.target === dark_screen){
@@ -106,30 +133,76 @@ let modalWindow = document.querySelector('.modal-window-blur')
 
 $('.openModal').click(function(){
   $(modalWindow).toggleClass('display-block');
+  // fixed_screen.classList.toggle(`fixed-screen`);
 });
 
 $('.close-window').click(function(){
   $(modalWindow).toggleClass('display-block');
+  // fixed_screen.classList.toggle(`fixed-screen`);
 });
 
-
+});
 
 //
 //Product inner page
 //slider
+// //
+// var slideIndex = 1;
+// showSlideImage(slideIndex);
+
+
+// function slideImage(n) {
+//   showSlideImage(slideIndex += n);
+//   // myFunction(minCount += n, maxCount += n)
+// }
+
+
+// let myFunction = (n, m) => {
+//   // console.log(n, m);
+
+//   let i,y
+//   imageOnShow = document.querySelectorAll(".slider-image_small");
+
+//   if (m > imageOnShow.length){
+//     // maxCount = 3
+//     imageOnShow[1,2,0].style.display = 'block'
+//   }
+//   if (n < 0){
+//     minCount = 1
+//     maxCount = 4
+//   }
+
+//   // for (i = 0; i < imageOnShow.length; i++) {
+//   //   imageOnShow[i].style.display = 'none'
+//   // }
+
+//   for (y = n; y < m; y++){
+//     imageOnShow[y].style.display = 'block'
+//   }
+// }
+// myFunction(minCount, maxCount)
+
 //
-// $(document).ready(function(){
-//   $('.product_big-image').slick({
-//     slidesToShow: 1,
-//     slidesToScroll: 1,
-//     arrows: true,
-//     fade: true,
-//     // cssEase: 'linear'
-//   });
-// });
+// Image modal window
+let imageModalWindow = document.querySelector(".image-modal");
+let modalImage = document.querySelector(".modal-content");
+let currentImage = document.querySelector(".slider-image")
+let fixed_screen = document.querySelector(`body`)
+
+let openModal = () => {
+  
+  imageModalWindow.style.display = 'block';
+  modalImage.src = currentImage.src;
+  fixed_screen.classList.toggle(`fixed-screen`);
+
+};
+
+let closeModal = () => {
+  imageModalWindow.style.display = 'none';
+  fixed_screen.classList.toggle(`fixed-screen`);
+};
 
 
-});
 
 //
 //Product inner page
@@ -149,3 +222,18 @@ let openDescription = (evt, tabID) => {
   document.querySelector(`#${tabID}`).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+
+let aaaa = document.querySelector('.description_tabs')
+window.onload = () => {
+  if(document.querySelector('html').contains(aaaa)){
+    console.log('yra');
+    document.querySelector('.description_tabs').firstElementChild.classList.add("active");
+    document.querySelector('.description-content').firstElementChild.classList.add("content-block");
+  }
+  // else{
+  //   console.log('nera')
+  // }
+
+}
+

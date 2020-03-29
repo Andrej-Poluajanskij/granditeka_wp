@@ -3,105 +3,32 @@
 get_header();
 ?>
 <?php include('includes/page_title.php'); ?>
+
+<?php 
+
+$myManufacturers = get_terms([
+    'taxonomy' => 'manufacturer',
+    'hide_empty' => false,
+]);
+
+?>
 <section class="category category_page container container-2">
             <div class="category-list">
                 <ul >
+                <?php foreach($myManufacturers as $item) {?>
                     <li class="flip-up" >
-                        <a href="">
+                        <a href="<?php echo get_term_link($item->term_id); ?>">
                             <div class="category-image">
-                                <img src="<?php echo get_template_directory_uri(); ?>/images/manufacturers/cummins.jpg" alt="">
+                                <img src="<?php echo get_correct_image_link_thumb(get_field('manufacturers_image', $item), 'category_image' ); ?>" alt="">
                                 <div class="image-hover-effect"></div>
                             </div>
                             <div class="category-list-title">
                                 <span></span>
-                                <h3>cummins</h3>
+                                <h3><?php echo $item ->name; ?></h3>
                             </div>
                         </a>
                     </li>
-                    <li class="flip-up" >
-                        <a href="">
-                            <div class="category-image">
-                                <img src="<?php echo get_template_directory_uri(); ?> /images/manufacturers/daf.jpg" alt="">
-                                <div class="image-hover-effect"></div>
-                            </div>
-                            <div class="category-list-title">
-                                <span></span>
-                                <h3>daf</h3>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="flip-up" >
-                        <a href="">
-                            <div class="category-image">
-                                <img src="<?php echo get_template_directory_uri(); ?> /images/manufacturers/ford.jpg" alt="">
-                                <div class="image-hover-effect"></div>
-                            </div>
-                            <div class="category-list-title">
-                                <span></span>
-                                <h3>ford</h3>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="flip-up" >
-                        <a href="">
-                            <div class="category-image">
-                                <img src="<?php echo get_template_directory_uri(); ?> /images/manufacturers/iveco.jpg" alt="">
-                                <div class="image-hover-effect"></div>
-                            </div>
-                            <div class="category-list-title">
-                                <span></span>
-                                <h3>iveco</h3>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="flip-up" >
-                        <a href="">
-                            <div class="category-image">
-                                <img src="<?php echo get_template_directory_uri(); ?> /images/manufacturers/man.jpg" alt="">
-                                <div class="image-hover-effect"></div>
-                            </div>
-                            <div class="category-list-title">
-                                <span></span>
-                                <h3>man</h3>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="flip-up" >
-                        <a href="">
-                            <div class="category-image">
-                                <img src="<?php echo get_template_directory_uri(); ?> /images/manufacturers/mers.jpg" alt="">
-                                <div class="image-hover-effect"></div>
-                            </div>
-                            <div class="category-list-title">
-                                <span></span>
-                                <h3>mersedez-benz</h3>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="flip-up" >
-                        <a href="">
-                            <div class="category-image">
-                                <img src="<?php echo get_template_directory_uri(); ?> /images/manufacturers/renault.jpg" alt="">
-                                <div class="image-hover-effect"></div>
-                            </div>
-                            <div class="category-list-title">
-                                <span></span>
-                                <h3>renault</h3>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="flip-up" >
-                        <a href="">
-                            <div class="category-image">
-                                <img src="<?php echo get_template_directory_uri(); ?> /images/manufacturers/scania.jpg" alt="">
-                                <div class="image-hover-effect"></div>
-                            </div>
-                            <div class="category-list-title">
-                                <span></span>
-                                <h3>scania</h3>
-                            </div>
-                        </a>
-                    </li>
+                <?php } ?>
                 </ul>
             </div>
             <div class="bg-decor decor-position-1"></div>

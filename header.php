@@ -12,10 +12,18 @@
     <header>
         <div class="header container">
             <div class="logo">
-                <img src="<?php echo get_template_directory_uri(); ?> /icons/Group 1.png" alt="">
+              <a href="<?php echo get_option("siteurl"); ?>">
+                <div class="logo-img" style="background-image: url(<?php the_field('logo_icon', 'options'); ?>)"></div>
+             </a>  
                 <div class="fast-contacts">
-                    <div><span class="envelope-icon"></span><a href="mailto:info@granditeka.eu"><?php the_field('email', 'options'); ?> </a></div> 
-                    <div><span class="phone-icon"></span><a href="tel:+370 696 11332">+370 696 11332</a></div>
+                    <div>
+                        <span class="envelope-icon"></span>
+                        <a href="mailto:<?php the_field('email', 'options'); ?>u"><?php the_field('email', 'options'); ?> </a>
+                    </div> 
+                    <div>
+                        <span class="phone-icon"></span>
+                        <a href="tel:<?php the_field('tel_number', 'options'); ?>"><?php the_field('tel_number', 'options'); ?></a>
+                    </div>
                 </div>
             </div>
             <div class="header-burger-meniu btn not-active">

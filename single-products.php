@@ -8,19 +8,29 @@ get_header();
             <div class="product_inner-image">
                 <div class="product_big-image slider-conteiner">
                     <div class="slider">
-                        <img src="<?php echo get_template_directory_uri(); ?> /images/product-2.jpg" alt="" />
+                        <a class="fancy-box" data-fancybox="gallery" href="">
+                            <img class="slider-image" onclick="openModal()" src="<?php echo get_correct_image_link_thumb(get_field('product_image'), 'news_inner-page_image' ); ?>" alt="" />
+                        </a>                    
+                        <button class="prev" onclick="slideImage(-1)"></button>
+                        <button class="next" onclick="slideImage(1)"></button>
+                        <div class="image-zoom" onclick="openModal()"></div>
                     </div>
-                    <!-- <div class="slider">
-                        <img src="  <?php echo get_template_directory_uri(); ?>/images/product-2.jpg" alt="" />
-                    </div>
-                    <div class="slider">
-                        <img src="<?php echo get_template_directory_uri(); ?> /images/product-2.jpg" alt=" "/>
-                    </div> -->
-                 
                 </div>
-                <div class="product_small-images">
 
+                <div class="product_small-images">
+                <?php if( have_rows('product_page_images') ): ?>
+                    <?php while( have_rows('product_page_images') ): the_row(); ?>
+                    <img class="slider-image_small" style="display: none" src="<?php echo get_correct_image_link_thumb(get_sub_field('image_1'), 'news_inner-page_image' ); ?>" alt="" />
+                    <?php endwhile; ?>
+                <?php endif; ?>
+                    <div class="image-count"><span class="counter"></span></div>
                 </div>
+
+                <!-- <div class="image-modal">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <img class="modal-content" src="" >
+                </div> -->
+
             </div>
             <div class="product_inner-info">
                 <div class="product_inner-info_title">
@@ -52,7 +62,7 @@ get_header();
                 ?>
                     
                     <?php while( have_rows('add_for_product') ): the_row(); 
-                    $myID = $myID + 1;
+                        $myID++;
                     ?>
                     <div class="product_adds">
 
@@ -67,35 +77,13 @@ get_header();
                     <?php endwhile; ?>
                     <?php endif; ?>
                 </div>
-
-                    <!-- <div class="product_adds">
-                        <label for="add-2">99
-                            <span class="checkbox "></span>
-                            <input type="checkbox" id="add-2" value="50">
-                            <span class="product_adds-price">50&euro;</span>
-                        </label>
-                    </div>
-                    <div class="product_adds">
-                        <label for="add-3">99331043 -pin cable
-                            <span class="checkbox "></span>
-                            <input type="checkbox" id="add-3" value="50">
-                            <span class="product_adds-price">50&euro;</span>
-                        </label>
-                    </div>
-                    <div class="product_adds">
-                        <label for="add-4">99331043 3
-                            <span class="checkbox "></span>
-                            <input type="checkbox" id="add-4" value="50">
-                            <span class="product_adds-price">50&euro;</span>
-                        </label>
-                    </div> -->
                
             </div>
             
             <div class="modal-window-blur ">
                 <div class="modal-window">
                     <h4>Offer your price</h4>
-                    <form action="">
+                    <form action="" id="offeerPrice">
                         <div class="form-item">
                             <label for="name">Contact name<span>*</span></label>
                             <input name="name" type="text" minlength="5" placeholder="Type your name" required>
@@ -108,43 +96,46 @@ get_header();
                             <label for="message">Message<span>*</span></label>
                             <textarea name="massage" minlength="10" cols="65" rows="4" placeholder="Type your message" required></textarea>
                         </div>
-                    </form>
                         <div class="contacts-form-button">
                             <button type="submit" class="big-button"><span>Send offer</span></button>
                         </div>
+                    </form>
                         <div class="close-window">
                         </div>
                 </div>        
             </div>
 
             <div class="product_inner-description" id="tabs">
+
+            <?php if( have_rows('product_description') ):
+                $tab_ID = 0;
+                ?>
                 <div class="description_tabs">
-                    <div onclick="openDescription(event, 'tab-1')" class="description-name active">
-                       Descrioption
+                <?php while( have_rows('product_description') ): the_row();
+                    $tab_ID++;
+                ?>
+
+                    <div onclick="openDescription(event, 'tab-<?php echo $tab_ID ?>')" class="description-name ">
+                        <?php the_sub_field('description_title'); ?>
                     </div>
-                    <div onclick="openDescription(event, 'tab-2')" class="description-name">
-                       Additional information
-                    </div>
-                    <div onclick="openDescription(event, 'tab-3')" class="description-name">
-                       Warranty
-                    </div>
+
+
+                <?php endwhile; ?>
                 </div>
 
                 <div class="description-content">
-                    <div id="tab-1" class="description-name-content content-block">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero in labore fugit vitae, dolore obcaecati hic ipsum dolorem perferendis tenetur beatae, accusantium laudantium sequi debitis ducimus? Rerum corrupti voluptatibus illum consequuntur eveniet neque? Maxime sit placeat ex, accusamus ratione iusto ipsam sapiente tempora nesciunt? Distinctio eos fugit et sed sit dicta tenetur accusamus aspernatur dolorum, ab quae eaque laboriosam architecto at unde exercitationem ipsam quidem? Distinctio fuga expedita possimus vel non sequi rerum ut sint pariatur quia dignissimos, et quos obcaecati placeat, reprehenderit a perspiciatis? Fugit obcaecati ipsum possimus labore ducimus laboriosam molestias recusandae, maiores deleniti natus expedita perferendis vitae?</p>
-                    </div>
-                    <div id="tab-2" class="description-name-content">
-                        <p>Lorem ipsum dolor sit, Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde doloribus excepturi aliquid ab dignissimos culpa, quasi id nam perferendis atque. Recusandae tempora quos eaque soluta? Suscipit perferendis vero illo.</p>
-                    </div>
-                    <div id="tab-3" class="description-name-content">
-                        <p>Warranty</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium unde, voluptatibus est praesentium ducimus corporis hic, qui voluptatum dolore rerum et perferendis eveniet pariatur commodi cumque error saepe tempora architecto accusamus minima. Sequi consequuntur maiores, molestiae nisi tempora saepe dignissimos aut magni dolorum quaerat tempore.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, nihil. Facere a illum veniam quia similique in culpa corrupti eligendi vel nisi explicabo magnam sunt maxime fuga ad officia provident maiores, quod cupiditate tempore consequuntur!</p>
-                        <p>Lorem ipsum dolor sit, Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde doloribus excepturi aliquid ab dignissimos culpa, quasi id nam perferendis atque. Recusandae tempora quos eaque soluta? Suscipit perferendis vero illo.</p>
-                    </div>
-                </div>
+                <?php  $tab_ID = 0; ?>
+                <?php while( have_rows('product_description') ): the_row(); 
+                    $tab_ID++;
+                ?>
 
+                    <div id="tab-<?php echo $tab_ID ?>" class="description-name-content ">
+                        <p> <?php the_sub_field('description_content'); ?></p>
+                    </div>
+
+                    <?php endwhile; ?>
+                </div>
+                <?php endif; ?>
             </div>
 
         </div>
@@ -170,7 +161,7 @@ get_header();
                         100&euro; - 200&euro;
                     </div>
                     <div class="product-list-button">
-                        <a>More Information</a>
+                        <p>More Information</p>
                     </div>
                 </li>
                 <li>
@@ -184,7 +175,7 @@ get_header();
                         100&euro; - 200&euro;
                     </div>
                     <div class="product-list-button">
-                        <a>More Information</a>
+                        <p>More Information</p>
                     </div>
                 </li>
                 <li>
@@ -198,7 +189,7 @@ get_header();
                         100&euro; - 200&euro;
                     </div>
                     <div class="product-list-button">
-                        <a>More Information</a>
+                        <p>More Information</p>
                     </div>
                 </li>
                 <li>
@@ -212,7 +203,7 @@ get_header();
                         100&euro; - 200&euro;
                     </div>
                     <div class="product-list-button">
-                        <a>More Information</a>
+                        <p>More Information</p>
                     </div>
                 </li>
             </ul>

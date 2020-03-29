@@ -17,7 +17,11 @@ add_theme_support( 'post-thumbnails' );
 if ( function_exists( 'add_image_size' ) ) {
 	add_image_size( 'category_image', 324, 403, false );
 	add_image_size( 'news_image', 431, 260, false );
+	add_image_size( 'news_inner-page_image', 652, 500, false );
+    add_image_size( 'about-us_image', 1364, 507, false );
+    
 	add_image_size( 'product_image', 322, 275, true );
+	add_image_size( 'product_page_image', 250, 215, true );
 }
 
 // custom function for returning excerpt from post
@@ -48,10 +52,18 @@ function get_correct_image_link_thumb($thumb_id='', $size='large'){
 show_admin_bar(false);
 
 // get url by page template
-function page_url_get(){
+function get_all_products_url(){
     $page_var = get_pages(array(
         'meta_key' => '_wp_page_template',
-        'meta_value' => 'template-allstories.php'
+        'meta_value' => 'template-product_list.php'
+    ));
+    return get_permalink($page_var[0]->ID);
+}
+
+function get_all_news_url(){
+    $page_var = get_pages(array(
+        'meta_key' => '_wp_page_template',
+        'meta_value' => 'template-news.php'
     ));
     return get_permalink($page_var[0]->ID);
 }
@@ -59,7 +71,7 @@ function page_url_get(){
 // Create ACF options page
 if( function_exists('acf_add_options_sub_page') )
 {
-    acf_add_options_sub_page( 'Temos nustatymai' );
+    acf_add_options_sub_page( 'Header contacts' );
 }
 
 // Create wordpress menu locations
@@ -80,3 +92,50 @@ function filter_data(){
     die();
 }
 */
+
+//Search product function
+function template_chooser($template)   
+{    
+  global $wp_query;   
+  $post_type = get_query_var('post_type');   
+  if( $wp_query->is_search && $post_type == 'products' )   
+  {
+    return locate_template('archive-search.php');  
+  }   
+  return $template;   
+}
+add_filter('template_include', 'template_chooser');
+
+
+// Contacts form
+add_action('wp_ajax_send_contact_form_message',        'send_contact_form_message');
+add_action('wp_ajax_nopriv_send_contact_form_message', 'send_contact_form_message');
+function send_contact_form_message(){
+    $to = 'andrej@nextweb.lt';
+
+
+    print_r($_POST);
+    // die();
+
+
+    
+
+    $message ='
+        Name: '.$_POST['name'].'<br />
+        Subject: '.$_POST['subject'].'<br />
+        Number: '.$_POST['number'].'<br />
+        Email: '.$_POST['email'].'<br />
+        Message: '.$_POST['massage'].'<br />
+        ';
+
+    $headers = array(
+        'Content-Type: text/html; charset=UTF-8',
+        'From:  - Metbela <andrej_polujanskij@icloud.com>',
+        'Reply-To: '.$firstName.' '.$lastName.' <'.$email.'>'
+    );
+
+    $subject = 'Kontaktu forma';
+
+    wp_mail($to, $subject, $message, $headers);
+    die();
+}

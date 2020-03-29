@@ -1,20 +1,32 @@
 <?php
-/* Template name: Products List */
 get_header();
+
+$product_ID =  get_queried_object()->term_id;
+
+
 ?>
-<?php include('includes/page_title.php'); ?>
+<?php  include('includes/terms_title.php'); ?>
 <section class="products product_list-page container container-2">
     <div class="product_list-left">
         <div class="products-list">
             <ul>
+
             <?php
+                $args = array(
+                    'post_type' => 'products',
+                    'tax_query' => array(
+                        array(
+                        'taxonomy' => 'categories',
+                        'field' => 'term_id',
+                        'terms' => $product_ID
+                        )
+                    )
+                    );
+                $query = new WP_Query( $args );
 
-                $product = array('post_type' => 'products', 'posts_per_page' => -1);
-                $products = new WP_Query($product);
-
-                if($products->have_posts()) : 
-                while($products->have_posts()) : 
-                    $products->the_post();
+                if($query->have_posts()) : 
+                while($query->have_posts()) : 
+                    $query->the_post();
             ?>
 
                 <li>

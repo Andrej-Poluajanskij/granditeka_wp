@@ -44,5 +44,67 @@ function post_type_products() {
 add_action( 'init', 'post_type_products', 0 );
 
 
+function manufacturers_taxonomy_custom()  {
+    $labels = array(
+        'name'                       => 'Manufacturers',
+        'singular_name'              => 'Manufacturers',
+        'menu_name'                  => 'Manufacturers',
+        'all_items'                  => 'All Manufacturers',
+        'parent_item'                => 'Parent Manufacturers',
+        'parent_item_colon'          => 'Parent Manufacturers:',
+        'new_item_name'              => 'New Manufacturers Name',
+        'add_new_item'               => 'Add New Manufacturers',
+        'edit_item'                  => 'Edit Manufacturers',
+        'update_item'                => 'Update Manufacturers',
+        'separate_items_with_commas' => 'Separate Categories with commas',
+        'search_items'               => 'Search Categories',
+        'add_or_remove_items'        => 'Add or remove Categories',
+        'choose_from_most_used'      => 'Choose from the most used Categories',
+    );
+    $args = array(
+        'labels'                     => $labels,
+        'hierarchical'               => true,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => true,
+    );
+    register_taxonomy( 'manufacturer', 'products', $args );
+    register_taxonomy_for_object_type( 'manufacturer', 'products' );
+}
+add_action( 'init', 'manufacturers_taxonomy_custom' );
+
+
+function categories_taxonomy_custom()  {
+    $labels = array(
+        'name'                       => 'Categories',
+        'singular_name'              => 'Categories',
+        'menu_name'                  => 'Categories',
+        'all_items'                  => 'All Categories',
+        'parent_item'                => 'Parent Categories',
+        'parent_item_colon'          => 'Parent Categories:',
+        'new_item_name'              => 'New Categories Name',
+        'add_new_item'               => 'Add New Categories',
+        'edit_item'                  => 'Edit Categories',
+        'update_item'                => 'Update Categories',
+        'separate_items_with_commas' => 'Separate Categories with commas',
+        'search_items'               => 'Search Categories',
+        'add_or_remove_items'        => 'Add or remove Categories',
+        'choose_from_most_used'      => 'Choose from the most used Categories',
+    );
+    $args = array(
+        'labels'                     => $labels,
+        'hierarchical'               => true,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => true,
+    );
+    register_taxonomy( 'categories', 'products', $args );
+    register_taxonomy_for_object_type( 'categories', 'products' );
+}
+add_action( 'init', 'categories_taxonomy_custom' );
 
 

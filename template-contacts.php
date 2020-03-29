@@ -6,78 +6,50 @@ get_header();
      <div class="contacts-background">
          <section class="contacts_page container container-2">
             <div class="main-contacts_page">
-                <ul>
-                    <li>
-                        <div class="main-contacts_page-icon icon-1">
-                        </div>
-                        <div class="main-contacts_page-note">
-                            <span>Adress</span>
-                            <address>Kalvariju g. 125, 1 korp.LT-08221 Vilnius</address>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="main-contacts_page-icon icon-3">
-                        </div>
-                        <div class="main-contacts_page-note">
-                            <span>Sales department</span>
-                            <a href="mailto:sales@granditeka.eu">sales@granditeka.eu</a>
-                        </div>
-                    </li>
-                 
-                    <li>
-                        <div class="main-contacts_page-icon icon-4">
-                        </div>
-                        <div class="main-contacts_page-note">
-                            <span>Working hours</span>
-                            <address>I-V 9:00-18:00</address>
-                        </div>
-                    </li>
-                 
-                    <li>
-                        <div class="main-contacts_page-icon icon-3">
-                        </div>
-                        <div class="main-contacts_page-note">
-                            <span>Technical support</span>
-                            <a href="mailto:support@granditeka.eu">support@granditeka.eu</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="main-contacts_page-icon icon-2">
-                        </div>
-                        <div class="main-contacts_page-note">
-                            <span>Phone number</span>
-                            <a href="tel:+370 608 14423">+370 608 14423</a>
-                        </div>
-                    </li>
 
+            <!-- <?php //if( have_rows('contacts_items') ): ?>
+                <ul>
+
+                <?php //while( have_rows('contacts_items') ): the_row(); ?>
                     <li>
-                        <div class="main-contacts_page-icon icon-3">
+                        <div class="main-contacts_page-icon" style="background-image: url(<?php the_sub_field('contact_icon'); ?>)">
                         </div>
                         <div class="main-contacts_page-note">
-                            <span>Information about products</span>
-                            <a href="mailto:info@granditeka.eu">info@granditeka.eu</a>
+                            <span><?php the_sub_field('contact_title'); ?></span>
+                            <a href="mailto:<?php the_sub_field('contact_text'); ?>"><?php the_sub_field('contact_text'); ?></a>
                         </div>
                     </li>
-                    <li>
-                        <div class="main-contacts_page-icon icon-5">
-                        </div>
-                        <div class="main-contacts_page-note">
-                            <span>VAT NUMBER</span>
-                            <address>GB 223462237</address>
-                        </div>
-                    </li>
-                   
-                    
-                    <li>
-                        <div class="main-contacts_page-icon icon-3">
-                        </div>
-                        <div class="main-contacts_page-note">
-                            <span>warranty</span>
-                            <a href="mailto:warranty@granditeka.eu">warranty@granditeka.eu</a>
-                        </div>
-                    </li>
-                    
-                </ul>
+                    <?php// endwhile; ?> -->
+
+                    <?php if( have_rows('main_contacts_fields') ): ?>
+                    <ul class="main-contacts_page-left">
+                        <?php while( have_rows('main_contacts_fields') ): the_row(); ?>
+                            <li>
+                                <div class="main-contacts_page-icon" style="background-image: url(<?php the_sub_field('contact_icon'); ?>)" > 
+                                </div>
+                                <div class="main-contacts_page-note">
+                                    <span><?php the_sub_field('contact_title'); ?></span>
+                                    <a><?php the_sub_field('contact_text'); ?></a>
+                                </div>
+                        </li>
+                        <?php endwhile; ?> 
+                    </ul>
+                    <?php endif; ?>
+
+                    <?php if( have_rows('email_contacts_fields') ): ?>
+                    <ul class="main-contacts_page-right">
+                        <?php while( have_rows('email_contacts_fields') ): the_row(); ?>
+                            <li>
+                                <div class="main-contacts_page-icon" style="background-image: url(<?php the_sub_field('contacts_icon'); ?>)">
+                                </div>
+                                <div class="main-contacts_page-note">
+                                    <span><?php the_sub_field('contact_title'); ?></span>
+                                    <a href="mailto:<?php the_sub_field('contact_text'); ?>"><?php the_sub_field('contact_text'); ?></a>
+                                </div>
+                            </li>
+                        <?php endwhile; ?>                 
+                    </ul>
+                <?php  endif; ?>
              </div>
              <div class="contacts_page-deliver">
                 <div>WE DELIVER <span>WORLDWIDE!</span></div>
@@ -121,10 +93,24 @@ get_header();
                             <textarea name="massage" minlength="10" id="" cols="65" rows="7" placeholder="Type your message" required></textarea>
                         </div>
                     </div>
-                </form>
                 <div class="contacts-form-button">
                     <button type="submit" class="big-button"><span>Send message</span></button>
                 </div>
+                </form>
+                <div class="loader display-none">
+                        <div class="circles">
+                            <span class="one"></span>
+                            <span class="two"></span>
+                            <span class="three"></span>
+                        </div>
+                        <div class="pacman">
+                            <span class="top"></span>
+                            <span class="bottom"></span>
+                            <span class="left"></span>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="send">Sending...</div>
+                    </div>
          </section>
          <section class="payment container container-2">
             <div class="section-header">
@@ -134,10 +120,27 @@ get_header();
             </div>
             <div class="payment-methods">
                 <ul>
-                    <li><span class="payment-methods-icon icon-1"></span></li>
-                    <li><span class="payment-methods-icon icon-2"></span></li>
-                    <li><span class="payment-methods-icon icon-3"></span></li>
-                    <li><span class="payment-methods-icon icon-4"></span></li>
+                    <?php 
+                        $moneygram = get_field('moneygram');
+                        $westernunion = get_field('westernunion');
+                        $paypal = get_field('paypal');
+                        $bank = get_field('bank');
+                    ?>
+                    <?php if($moneygram){ ?>
+                        <li><span class="payment-methods-icon icon-1"></span></li>
+                    <?php } ?>
+
+                    <?php if($westernunion){ ?>
+                        <li><span class="payment-methods-icon icon-2"></span></li>
+                    <?php } ?>
+
+                    <?php if($paypal){ ?>
+                        <li><span class="payment-methods-icon icon-3"></span></li>
+                    <?php } ?>
+                    
+                    <?php if($bank){ ?>
+                        <li><span class="payment-methods-icon icon-4"></span></li>
+                    <?php } ?>
                 </ul>
             </div>
          </section>
